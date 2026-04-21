@@ -14,10 +14,12 @@ needed_vals = [
 
 ## functions ##
 
-def get_volts(line):
+def parse_lines(line , target):
     split_line = line.split()
     for index, word in enumerate(split_line):
-        if word == "Volts": return split_line[index - 1]
+        if word == target: return split_line[index - 1]
+    ## if it does not see volts
+    return "FAIL"
 
 
 def run_IPMI():
@@ -44,10 +46,10 @@ class IPMI_sensors():
         for line in result:
             ## go through list and define needed values
             if line[:4] == needed_vals[0]:
-                self.vol3v3 = get_volts(line)
+                self.vol3v3 = parse_lines(line , "Volts")
             if line[:4] == needed_vals[1]:
-                self.vol5v = get_volts(line)
+                self.vol5v = parse_lines(line , "Volts")
             if line[:4] == needed_vals[2]:
-                self.vol12v = get_volts(line)
+                self.vol12v = parse_lines(line , "Volts")
 
         
