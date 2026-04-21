@@ -15,7 +15,7 @@
 ## import modules
 import tkinter as tk
 import ctypes
-from .get_sensor_data import gsd_main
+from .get_sensor_data import IPMI_sensors
 
 ## variables
 
@@ -63,7 +63,7 @@ def configure_window( root ):
 
 def app_main():
     ## run sensor first
-    gsd_main()
+    sensors = IPMI_sensors()
     ## Create the main windows
     appID = 'appliedmaterials.PSUreader.GUI.1'
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appID)
@@ -74,5 +74,4 @@ def app_main():
     root.configure(bg='white')
     ## Create the text boxes and recieve them back
     value_boxes = configure_window(root)
-    gsd_main()
     root.mainloop()
