@@ -76,6 +76,8 @@ def app_main():
     value_boxes = configure_window(root)
     def update_data():
         # delete the data in the box first
+
+        print("refreshed")
         for box in value_boxes:
             box.delete(0, tk.END)
 
