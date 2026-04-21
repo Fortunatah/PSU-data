@@ -84,7 +84,10 @@ def app_main():
             box.delete(0, tk.END)
 
         ## update boxes with correct data
-        value_boxes[0].insert(0, sensors.vol5v)
+        value_boxes[0].insert(0, f"{sensors.vol5v}V")
+        value_boxes[1].insert(0, f"{sensors.vol3v3}V")
+        value_boxes[2].insert(0, f"{sensors.vol12v}V")
+        value_boxes[3].insert(0, f"{sensors.temp}\u00b0C")
 
     update_data()
     root.mainloop()
