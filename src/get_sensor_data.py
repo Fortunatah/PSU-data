@@ -14,12 +14,17 @@ needed_vals = [
 
 ## functions ##
 
+def get_volts(line):
+    for word in line.split():
+        print(word)
+
 def run_IPMI():
     IPMI_path = "ipmiutil\\ipmiutil.exe"
     result  = subprocess.run([ IPMI_path , "sensor"] 
                              , capture_output=True, text = True)
+    
+    ## Grab raw output and only grab what we need
     raw_output = result.stdout
-
     needed_lines = []
     for line in raw_output.split("\n"):
         if line[:4] in needed_vals:
@@ -32,7 +37,11 @@ class IPMI_sensors():
     def __init__(self):
         self.refresh()
     def refresh(self):
+        ## refresh the results and parse the data
         result = run_IPMI()
         for line in result:
-            print(line)
+            ## go through list and define needed values
+            if line[:4] == needed_vals[0]:
+                self.vol3v3 = get_volts(line)
+
         
