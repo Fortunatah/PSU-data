@@ -15,6 +15,6 @@ def run_IPMI():
 ## main class ##
 
 class IPMI_sensors():
-    def __init__():
+    def __init__(self):
         result = run_IPMI()
         print(result)
