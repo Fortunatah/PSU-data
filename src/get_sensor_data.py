@@ -17,5 +17,4 @@ def run_IPMI():
 class IPMI_sensors():
     def __init__(self):
         result = run_IPMI()
-        for line in result:
-            print(f"line = {line}")
+        result = result.split("\n")
