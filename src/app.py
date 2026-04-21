@@ -76,8 +76,6 @@ def app_main():
     value_boxes = configure_window(root)
     def update_data():
         # delete the data in the box first
-
-        print("refreshed")
         for box in value_boxes:
             box.delete(0, tk.END)
 
@@ -89,7 +87,7 @@ def app_main():
 
         ## refresh the window and the sensors
         sensors.refresh()
-        root.after( 5000 ,update_data )
+        root.after( 2000 , update_data )
 
     update_data()
     root.mainloop()
