@@ -79,8 +79,12 @@ def app_main():
     ## Create the text boxes and recieve them back
     value_boxes = configure_window(root)
     def update_data():
+        # delete the data in the box first
         for box in value_boxes:
             box.delete(0, tk.END)
+
+        ## update boxes with correct data
+        value_boxes[0].insert(0, sensors.vol5v)
 
     update_data()
     root.mainloop()
