@@ -78,5 +78,9 @@ def app_main():
     root.configure(bg='white')
     ## Create the text boxes and recieve them back
     value_boxes = configure_window(root)
+    def update_data():
+        for box in value_boxes:
+            box.delete(0, tk.END)
 
+    update_data()
     root.mainloop()
