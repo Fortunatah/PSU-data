@@ -14,6 +14,7 @@
 """
 ## import modules
 import tkinter as tk
+import ctypes
 
 ## variables
 
@@ -46,6 +47,7 @@ def configure_window( root ):
                 sticky = "e")
         valueEntry = tk.Entry(root , 
                        highlightthickness=1 , 
+                       width=10,
                        highlightbackground= 'black' , 
                        highlightcolor= 'black', 
                        relief='flat'
@@ -60,10 +62,12 @@ def configure_window( root ):
 
 def app_main():
     ## Create the main windows
+    appID = 'appliedmaterials.PSUreader.GUI.1'
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appID)
     root = tk.Tk()
     root.title("AMAT PSU reader")
     root.iconbitmap("pictures\\applied_materials.ico")
-    root.geometry("400x200")
+    root.geometry("180x180")
     root.configure(bg='white')
     ## Create the text boxes and recieve them back
     value_boxes = configure_window(root)
