@@ -74,4 +74,5 @@ def app_main():
     root.configure(bg='white')
     ## Create the text boxes and recieve them back
     value_boxes = configure_window(root)
+
     root.mainloop()
