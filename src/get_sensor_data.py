@@ -31,7 +31,7 @@ def run_IPMI():
 class IPMI_sensors():
     def __init__(self):
         self.refresh()
-    def refresh():
+    def refresh(self):
         result = run_IPMI()
         for line in result:
             print(line)
