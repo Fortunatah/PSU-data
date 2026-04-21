@@ -3,13 +3,18 @@
 ##  IMPORTS ##
 
 import subprocess
-import os
 
-## FUNCTIONS ##
+## functions ##
 
-def gsd_main():
+def run_IPMI():
     IPMI_path = "ipmiutil\\ipmiutil.exe"
     result  = subprocess.run([ IPMI_path , "sensor"] 
                              , capture_output=True, text = True)
-    
-    print(result.stdout)
+    return result
+
+## main class ##
+
+class IPMI_sensors():
+    def __init__():
+        result = run_IPMI()
+        print(result)

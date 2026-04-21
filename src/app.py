@@ -62,6 +62,8 @@ def configure_window( root ):
     return entry_boxes
 
 def app_main():
+    ## run sensor first
+    gsd_main()
     ## Create the main windows
     appID = 'appliedmaterials.PSUreader.GUI.1'
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appID)
