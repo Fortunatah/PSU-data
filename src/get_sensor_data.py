@@ -18,5 +18,5 @@ class IPMI_sensors():
     def __init__(self):
         result = run_IPMI()
         raw_output = result.stdout
-        for word in raw_output.split():
+        for word in raw_output.split("\n"):
             print(f"w = {word}")
