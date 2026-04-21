@@ -64,10 +64,6 @@ def configure_window( root ):
 def app_main():
     ## run sensor first
     sensors = IPMI_sensors()
-    print(sensors.vol3v3)
-    print(sensors.vol5v)
-    print(sensors.vol12v)
-    print(f"{sensors.temp}\u00b0C")
     ## Create the main windows
     appID = 'appliedmaterials.PSUreader.GUI.1'
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appID)
@@ -88,6 +84,10 @@ def app_main():
         value_boxes[1].insert(0, f"{sensors.vol3v3}V")
         value_boxes[2].insert(0, f"{sensors.vol12v}V")
         value_boxes[3].insert(0, f"{sensors.temp}\u00b0C")
+
+        ## refresh the window and the sensors
+        sensors.refresh()
+        root.after( update_data )
 
     update_data()
     root.mainloop()
