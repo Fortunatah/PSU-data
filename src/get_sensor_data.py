@@ -20,12 +20,17 @@ def run_IPMI():
                              , capture_output=True, text = True)
     raw_output = result.stdout
 
+    needed_lines = []
     for line in raw_output.split("\n"):
-        print(line[:3])
+        if line[:4] in needed_vals:
+            needed_lines.append(line)
+    return needed_lines
 
 ## main class ##
 
 class IPMI_sensors():
     def __init__(self):
         result = run_IPMI()
+        for line in result:
+            print(line)
         
