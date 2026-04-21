@@ -15,6 +15,7 @@
 ## import modules
 import tkinter as tk
 import ctypes
+from .get_sensor_data import gsd_main
 
 ## variables
 
@@ -71,4 +72,5 @@ def app_main():
     root.configure(bg='white')
     ## Create the text boxes and recieve them back
     value_boxes = configure_window(root)
+    gsd_main()
     root.mainloop()
