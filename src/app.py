@@ -67,6 +67,7 @@ def app_main():
     print(sensors.vol3v3)
     print(sensors.vol5v)
     print(sensors.vol12v)
+    print(sensors.temp)
     ## Create the main windows
     appID = 'appliedmaterials.PSUreader.GUI.1'
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appID)

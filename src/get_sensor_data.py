@@ -51,5 +51,7 @@ class IPMI_sensors():
                 self.vol5v = parse_lines(line , "Volts")
             if line[:4] == needed_vals[2]:
                 self.vol12v = parse_lines(line , "Volts")
+            if line[:4] == needed_vals[3]:
+                self.temp = parse_lines(line , "degrees")
 
         
