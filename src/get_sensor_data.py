@@ -42,7 +42,7 @@ class IPMI_sensors():
         IPMI_result = run_IPMI(0x01)
         if not IPMI_result: self.vol3v3 = "!ERROR!"
         else: 
-            self.vol3v3 = convert_to_volts(IPMI_result[1] , 17 , -3 )
+            self.vol3v3 = convert_to_volts(IPMI_result[1] , 172 , -4 )
         # 5V
         IPMI_result = run_IPMI(0x02)
         if not IPMI_result: self.vol5v = "!ERROR!"
