@@ -2,27 +2,34 @@ import wmi
 
 # Connect to the WMI namespace
 c = wmi.WMI(namespace="root\\wmi")
-
-# Find the IPMI instance
 ipmi = c.Microsoft_IPMI()[0]
 
-# Call RequestResponse
-# Order: NetworkFunction, Lun, ResponderAddress, Command, RequestDataSize, RequestData
-result = ipmi.RequestResponse(
-    NetworkFunction=0x04,
-    Lun=0x00,
-    ResponderAddress=0x20,
-    Command=0x2D,
-    RequestDataSize=1,
-    RequestData=[0x03]  # Note: The library handles the byte array conversion
-)
+# Mapping the sensor IDs from your ipmiutil output
+sensors = {
+    "3.3V (P_3V3)": 0x01,
+    "5V (P_5V)":    0x02,
+    "12V (P_12V)":  0x03
+}
 
-# result[0] is CompletionCode (0 = Success)
-# result[1] is ResponseData (The array of bytes)
+print("--- IPMI Sensor Readings ---")
 
-if result[0] == 0:
-    # Get the second byte of the response data
-    raw_reading = result[1][1]
-    print(f"Raw Byte Reading: {raw_reading}")
-else:
-    print(f"IPMI Error. Completion Code: {result[0]}")
+for name, snum in sensors.items():
+    # Call the WMI method
+    # Returns a tuple: (CompletionCode, ResponseData, ResponseDataSize)
+    result = ipmi.RequestResponse(
+        NetworkFunction=0x04,
+        Lun=0x00,
+        ResponderAddress=0x20,
+        Command=0x2D,
+        RequestDataSize=1,
+        RequestData=[snum]
+    )
+
+    comp_code = result[0]
+    resp_data = result[1]
+
+    if comp_code == 0:
+        # resp_data[1] is the actual raw reading byte
+        print(f"{name:15} | Raw Hex: {hex(resp_data[1])} | Decimal: {resp_data[1]}")
+    else:
+        print(f"{name:15} | Failed with Completion Code: {comp_code}")
