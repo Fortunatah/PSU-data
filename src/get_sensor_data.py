@@ -57,5 +57,5 @@ class IPMI_sensors():
         IPMI_result = run_IPMI(0x81)
         if not IPMI_result: self.psu2 = "False"
         else: self.psu2 = IPMI_result[1]
-        self.psu2 = run_IPMI(0x81)
+        self.psu2 = run_IPMI(0x82)
         
