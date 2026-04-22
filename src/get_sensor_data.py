@@ -13,7 +13,7 @@ ipmi = c.Microsoft_IPMI()[0]
 
 def convert_to_volts( rawData , multiplier , k2 ):
     ## take the multiplier and the k2 factors and convert them to volts
-    return ( multiplier * rawData) * (10 ** k2)
+    return round( (( multiplier * rawData) * (10 ** k2))  , 2 )
 
 
 def run_IPMI( address ):
