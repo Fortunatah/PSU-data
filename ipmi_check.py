@@ -10,7 +10,9 @@ sensors = {
     "3.3V (P_3V3)": 0x01,
     "5V (P_5V)":    0x02,
     "12V (P_12V)":  0x03,
-    "SYS1_Temp":    0x20  # Added System 1 Temp
+    "SYS1_Temp":    0x20,
+    "PSU1_Status":    0x80, # Discrete sensor
+    "PSU2_Status":    0x81  # Discrete sensor
 }
 
 print("--- IPMI Sensor Readings ---")
