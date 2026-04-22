@@ -84,6 +84,8 @@ def app_main():
         value_boxes[1].insert(0, f"{sensors.vol3v3}V")
         value_boxes[2].insert(0, f"{sensors.vol12v}V")
         value_boxes[3].insert(0, f"{sensors.temp}\u00b0C")
+        value_boxes[4].insert(0, f"{sensors.psu1}")
+        value_boxes[5].insert(0, f"{sensors.psu2}")
 
         ## refresh the window and the sensors
         sensors.refresh()

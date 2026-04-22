@@ -3,37 +3,28 @@
 ##  IMPORTS ##
 
 import subprocess
+import wmi
 
 ## VARIABLES ##
-needed_vals = [
-    "0001", ## 3V3
-    "0002", ## 5V
-    "0003", ## 12V
-    "0017"  ## Sys 1 temp
-]
+c = wmi.WMI(namespace="root\\wmi")
+ipmi = c.Microsoft_IPMI()[0]
 
 ## functions ##
 
-def parse_lines(line , target):
-    split_line = line.split()
-    for index, word in enumerate(split_line):
-        if word == target: return split_line[index - 1]
-    ## if it does not see volts
-    return "FAIL"
+def run_IPMI( address ):
+    result = ipmi.RequestResponse(
+        NetworkFunction=0x04,
+        Lun=0x00,
+        ResponderAddress=0x20,
+        Command=0x2D,
+        RequestDataSize=1,
+        RequestData=[address]
+    )
 
-
-def run_IPMI():
-    IPMI_path = "ipmiutil\\ipmiutil.exe"
-    result  = subprocess.run([ IPMI_path , "sensor"] 
-                             , capture_output=True, text = True)
-    
-    ## Grab raw output and only grab what we need
-    raw_output = result.stdout
-    needed_lines = []
-    for line in raw_output.split("\n"):
-        if line[:4] in needed_vals:
-            needed_lines.append(line)
-    return needed_lines
+    comp_code = result[0]
+    resp_data = result[1]
+    if comp_code == 0: return resp_data
+    else: return False
 
 ## main class ##
 
@@ -41,17 +32,30 @@ class IPMI_sensors():
     def __init__(self):
         self.refresh()
     def refresh(self):
-        ## refresh the results and parse the data
-        result = run_IPMI()
-        for line in result:
-            ## go through list and define needed values
-            if line[:4] == needed_vals[0]:
-                self.vol3v3 = parse_lines(line , "Volts")
-            if line[:4] == needed_vals[1]:
-                self.vol5v = parse_lines(line , "Volts")
-            if line[:4] == needed_vals[2]:
-                self.vol12v = parse_lines(line , "Volts")
-            if line[:4] == needed_vals[3]:
-                self.temp = parse_lines(line , "degrees")
-
+        ## Go through each sensor and run it
+        # 3V3
+        IPMI_result = run_IPMI(0x01)
+        if not IPMI_result: self.vol3v3 = "False"
+        else: self.vol3v3 = IPMI_result[1]
+        # 5V
+        IPMI_result = run_IPMI(0x02)
+        if not IPMI_result: self.vol5v = "False"
+        else: self.vol5v = IPMI_result[1]
+        # 12V
+        IPMI_result = run_IPMI(0x03)
+        if not IPMI_result: self.vol12v = "False"
+        else: self.vol12v = IPMI_result[1]
+        # Temp
+        IPMI_result = run_IPMI(0x20)
+        if not IPMI_result: self.temp = "False"
+        else: self.temp = IPMI_result[1]
+        # PSU1
+        IPMI_result = run_IPMI(0x80)
+        if not IPMI_result: self.psu1 = "False"
+        else: self.psu1 = IPMI_result[1]
+        # PSU2
+        IPMI_result = run_IPMI(0x81)
+        if not IPMI_result: self.psu2 = "False"
+        else: self.psu2 = IPMI_result[1]
+        self.psu2 = run_IPMI(0x81)
         
