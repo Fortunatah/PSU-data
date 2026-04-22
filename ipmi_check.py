@@ -5,10 +5,12 @@ c = wmi.WMI(namespace="root\\wmi")
 ipmi = c.Microsoft_IPMI()[0]
 
 # Mapping the sensor IDs from your ipmiutil output
+# Mapping the sensor IDs
 sensors = {
     "3.3V (P_3V3)": 0x01,
     "5V (P_5V)":    0x02,
-    "12V (P_12V)":  0x03
+    "12V (P_12V)":  0x03,
+    "SYS1_Temp":    0x20  # Added System 1 Temp
 }
 
 print("--- IPMI Sensor Readings ---")
