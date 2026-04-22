@@ -17,6 +17,12 @@ result = ipmi.RequestResponse(
     RequestData=[0x03]  # Note: The library handles the byte array conversion
 )
 
-# result[0] is the ResponseData (the bytes we saw earlier)
-# result[0][1] is your raw hex reading
-print(f"Raw Byte Reading: {result[0][1]}")
+# result[0] is CompletionCode (0 = Success)
+# result[1] is ResponseData (The array of bytes)
+
+if result[0] == 0:
+    # Get the second byte of the response data
+    raw_reading = result[1][1]
+    print(f"Raw Byte Reading: {raw_reading}")
+else:
+    print(f"IPMI Error. Completion Code: {result[0]}")
