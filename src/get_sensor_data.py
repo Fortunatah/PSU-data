@@ -72,15 +72,15 @@ class IPMI_sensors():
                 print(IPMI_result[2])
             else: self.psu1 = "AC LOST"
         # PSU2
-        IPMI_result = run_IPMI(0x81)
-        if not IPMI_result: self.psu2 = "!ERROR!"
+        backplaneSensor = run_IPMI(0x81)
+        wattageSensor = run_IPMI(0x72)
+        if not backplaneSensor or not wattageSensor: self.psu2 = "!ERROR!"
         else:
-            # Grab the staus byte, it will be a number like 192
-            status_byte = IPMI_result[2]
-            # if status bytes last byte is 0, it means AC power loss is FALSE
-            if(status_byte & 0x01) == 0: 
-                self.psu2 = "OK"
-                print(IPMI_result[2])
-            else: self.psu2 = "AC LOST"
+            # we need to see if the power supply is connected to the back plane
+            # and see if it has wattage-> No wattage means it is not plugged in
+            if backplaneSensor == 192:
+                print(wattageSensor[1])
+            else:
+                print(wattageSensor[1])
 
         
