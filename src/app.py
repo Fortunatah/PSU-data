@@ -28,7 +28,19 @@ needed_values = [
     'PSU2'
 ]
 
-    ## confingure window and its boxes
+## configure entry boxes
+
+def data_to_entry(box , value ):
+    # if failure have it be red
+    if value == "!ERROR!" or value == "AC LOST":
+        box.insert(0, f"{value}" , fg = "red" )
+    # if the power is ok print green
+    elif value == "OK":
+        box.insert(0, f"{value}" , fg = "green" )
+    # every thing else is black
+    else:
+        box.insert(0, f"{value}" , fg = "black" )
+## confingure window and its boxes
 def configure_window( root ):
 
     root.columnconfigure(2 , weight = 1)
@@ -80,12 +92,12 @@ def app_main():
             box.delete(0, tk.END)
 
         ## update boxes with correct data
-        value_boxes[0].insert(0, f"{sensors.vol5v}V")
-        value_boxes[1].insert(0, f"{sensors.vol3v3}V")
-        value_boxes[2].insert(0, f"{sensors.vol12v}V")
-        value_boxes[3].insert(0, f"{sensors.temp}\u00b0C")
-        value_boxes[4].insert(0, f"{sensors.psu1}")
-        value_boxes[5].insert(0, f"{sensors.psu2}")
+        data_to_entry( value_boxes[0]  , f"{sensors.vol5v}V")
+        data_to_entry( value_boxes[1]  , f"{sensors.vol3v3}V")
+        data_to_entry( value_boxes[2]  , f"{sensors.vol12v}V")
+        data_to_entry( value_boxes[3]  , f"{sensors.temp}\u00b0C")
+        data_to_entry( value_boxes[4]  , f"{sensors.psu1}")
+        data_to_entry( value_boxes[5]  , f"{sensors.psu2}")
 
         ## refresh the window and the sensors
         sensors.refresh()
