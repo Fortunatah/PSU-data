@@ -62,7 +62,7 @@ class IPMI_sensors():
         else: self.temp = IPMI_result[1]
         # PSU1
         backplaneSensor = run_IPMI(0x80)
-        wattageSensor = run_IPMI(0x71)
+        wattageSensor = run_IPMI(0x74)
         if not backplaneSensor or not wattageSensor: self.psu1 = "!ERROR!"
         else:
             # we need to see if the power supply is connected to the back plane
@@ -77,7 +77,7 @@ class IPMI_sensors():
 
         # PSU2
         backplaneSensor = run_IPMI(0x81)
-        wattageSensor = run_IPMI(0x72)
+        wattageSensor = run_IPMI(0x75)
         if not backplaneSensor or not wattageSensor: self.psu2 = "!ERROR!"
         else:
             # we need to see if the power supply is connected to the back plane
