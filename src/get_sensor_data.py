@@ -79,8 +79,10 @@ class IPMI_sensors():
             # we need to see if the power supply is connected to the back plane
             # and see if it has wattage-> No wattage means it is not plugged in
             if backplaneSensor == 192:
+                self.psu2 = "OK" 
                 print(wattageSensor[1])
             else:
+                self.psu2 = "AC FAILED"
                 print(wattageSensor[1])
 
         
