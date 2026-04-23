@@ -63,7 +63,7 @@ def configure_window( root ):
                 sticky = "e")
         valueEntry = tk.Entry(root , 
                        highlightthickness=1 , 
-                       width=20,
+                       width=15,
                        highlightbackground= 'black' , 
                        highlightcolor= 'black', 
                        relief='flat'
