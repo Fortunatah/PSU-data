@@ -33,13 +33,16 @@ needed_values = [
 def data_to_entry(box , value ):
     # if failure have it be red
     if value == "!ERROR!" or value == "AC LOST":
-        box.insert(0, f"{value}" , fg = "red" )
+        box.insert(0, f"{value}")
+        box.config(fg="red")
     # if the power is ok print green
     elif value == "OK":
-        box.insert(0, f"{value}" , fg = "green" )
+        box.insert(0, f"{value}")
+        box.config(fg="green")
     # every thing else is black
     else:
-        box.insert(0, f"{value}" , fg = "black" )
+        box.insert(0, f"{value}")
+        box.config(fg="black")
 ## confingure window and its boxes
 def configure_window( root ):
 
