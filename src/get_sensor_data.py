@@ -87,8 +87,8 @@ class IPMI_sensors():
                 self.psu2 = "OK" 
             elif backplaneSensor[2] != 192:
                 self.psu2 = "PSU REMOVED"
-                print(backplaneSensor[2])
             else:
                 self.psu2 = "AC REMOVED"
+                print(wattageSensor)
 
         
