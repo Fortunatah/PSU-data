@@ -69,6 +69,6 @@ class IPMI_sensors():
         # PSU2
         IPMI_result = run_IPMI(0x81)
         if not IPMI_result: self.psu2 = "!ERROR!"
-        else: self.psu2 = IPMI_result[1]
+        else: self.psu2 = IPMI_result
 
         
