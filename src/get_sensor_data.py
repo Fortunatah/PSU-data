@@ -67,7 +67,7 @@ class IPMI_sensors():
         else:
             # we need to see if the power supply is connected to the back plane
             # and see if it has wattage-> No wattage means it is not plugged in
-            if backplaneSensor == 192 and wattageSensor[1] > 0:
+            if backplaneSensor[2] == 192 and wattageSensor[1] > 0:
                 self.psu1 = "OK" 
             elif backplaneSensor != 192:
                 self.psu1 = "PSU REMOVED"
@@ -81,7 +81,7 @@ class IPMI_sensors():
         else:
             # we need to see if the power supply is connected to the back plane
             # and see if it has wattage-> No wattage means it is not plugged in
-            if backplaneSensor == 192 and wattageSensor[1] > 0:
+            if backplaneSensor[2] == 192 and wattageSensor[1] > 0:
                 self.psu2 = "OK" 
             elif backplaneSensor != 192:
                 self.psu2 = "PSU REMOVED"
