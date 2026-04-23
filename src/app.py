@@ -105,7 +105,7 @@ def app_main():
 
         ## refresh the window and the sensors
         sensors.refresh()
-        root.after( 2000 , update_data )
+        root.after( 1000 , update_data )
 
     update_data()
     root.mainloop()
