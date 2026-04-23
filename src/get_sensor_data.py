@@ -63,12 +63,20 @@ class IPMI_sensors():
         # PSU1
         IPMI_result = run_IPMI(0x80)
         if not IPMI_result: self.psu1 = "!ERROR!"
-        elif IPMI_result[2] == 193: 
-            self.psu1 = "OK"
-        else: self.psu1 = IPMI_result
-        # PSU2
+        else:
+            # Grab the staus byte, it will be a number like 192
+            status_byte = IPMI_result[1][2]
+            # if status bytes last byte is 0, it means AC power loss is FALSE
+            if(status_byte & 0x01) == 0: self.psu1 = "OK!"
+            else: self.psu1 = "AC FAILED"
+        # PSU1
         IPMI_result = run_IPMI(0x81)
         if not IPMI_result: self.psu2 = "!ERROR!"
-        else: self.psu2 = IPMI_result
+        else:
+            # Grab the staus byte, it will be a number like 192
+            status_byte = IPMI_result[1][2]
+            # if status bytes last byte is 0, it means AC power loss is FALSE
+            if(status_byte & 0x01) == 0: self.psu2 = "OK!"
+            else: self.psu2 = "AC FAILED"
 
         
