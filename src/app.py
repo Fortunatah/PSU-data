@@ -15,6 +15,7 @@
 ## import modules
 import tkinter as tk
 import ctypes
+import wmi
 from .get_sensor_data import IPMI_sensors
 
 ## variables
@@ -28,7 +29,15 @@ needed_values = [
     'PSU2'
 ]
 
-## configure entry boxes
+## check if IPMI exists
+
+def check_ipmi():
+    c = wmi.WMI(namespace="root\\wmi")
+    if "Microsoft_IPMI" in [cls.info.name for cls in c.classes]:
+        return True
+    return False
+
+## configure returned texts
 
 def configure_text( string  , char ):
     if string != "!ERROR!":
@@ -51,6 +60,7 @@ def data_to_entry( box , value ):
     else:
         box.insert(0, f"{value}")
         box.config(fg="black")
+
 ## confingure window and its boxes
 def configure_window( root ):
 
@@ -114,5 +124,10 @@ def app_main():
         sensors.refresh()
         root.after( 1000 , update_data )
 
-    update_data()
+    if check_ipmi():
+        update_data()
+    else:
+        for box in value_boxes:
+            box.insert(0, f"NO IPMI")
+            box.config(fg="red")
     root.mainloop()
