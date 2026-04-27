@@ -62,18 +62,27 @@ class IPMI_sensors():
         else: self.temp = IPMI_result[1]
         # PSU1
         IPMI_result = run_IPMI(0x80)
-        print(IPMI_result)
-        IPMI_result = run_IPMI(0x7a)
         if not IPMI_result: self.psu1 = "!ERROR!"
-        else: 
-            self.psu1 = convert_to_volts(IPMI_result[1] , 
-                                           118 , -3 )
-        # PSU1
+        elif IPMI_result[2] != 192: self.psu1 = "!PSU REMOVED!"
+        else:
+            ## PSU status == 192
+            IPMI_result = run_IPMI(0x7a)
+            volts = convert_to_volts(IPMI_result[1] , 118, -3)
+            ## Check if it returns false
+            if not volts: self.psu1 = "!ERROR!"
+            elif volts < 11.4: self.psu1 = "!AC REMOVED!"
+            elif volts > 11.4: self.psu1 = "OK"
+        # PSU2
         IPMI_result = run_IPMI(0x81)
-        print(f"2->{IPMI_result}")
-        IPMI_result = run_IPMI(0x7b)
         if not IPMI_result: self.psu2 = "!ERROR!"
-        else: self.psu2 = convert_to_volts(IPMI_result[1] , 
-                                           118 , -3 )
+        elif IPMI_result[2] != 192: self.psu2 = "!PSU REMOVED!"
+        else:
+            ## PSU status == 192
+            IPMI_result = run_IPMI(0x7b)
+            volts = convert_to_volts(IPMI_result[1] , 118, -3)
+            ## Check if it returns false
+            if not volts: self.psu2 = "!ERROR!"
+            elif volts < 11.4: self.psu2 = "!AC REMOVED!"
+            elif volts > 11.4: self.psu2 = "OK"
 
         
