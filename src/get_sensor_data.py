@@ -65,9 +65,10 @@ class IPMI_sensors():
         if not IPMI_result: self.psu1 = "!ERROR!"
         else: self.psu1 = convert_to_volts(IPMI_result[1] , 
                                            118 , -3 )
-        # PSU2
+        # PSU1
         IPMI_result = run_IPMI(0x7b)
         if not IPMI_result: self.psu2 = "!ERROR!"
-        else: self.psu2 = IPMI_result
+        else: self.psu2 = convert_to_volts(IPMI_result[1] , 
+                                           118 , -3 )
 
         
