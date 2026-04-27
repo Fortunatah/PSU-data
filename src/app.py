@@ -107,7 +107,7 @@ def app_main():
         data_to_entry( value_boxes[0]  , configure_text( sensors.vol5v , "V") )
         data_to_entry( value_boxes[1]  , configure_text( sensors.vol3v3 , "V") )
         data_to_entry( value_boxes[2]  , configure_text( sensors.vol12v , "V") )
-        data_to_entry( value_boxes[3]  , configure_text( sensors.temp , r'\u00b0C') )
+        data_to_entry( value_boxes[3]  , configure_text( sensors.temp , "\u00b0C") )
         data_to_entry( value_boxes[4]  , f"{sensors.psu1}")
         data_to_entry( value_boxes[5]  , f"{sensors.psu2}")
         ## refresh the window and the sensors
