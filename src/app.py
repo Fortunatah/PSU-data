@@ -32,7 +32,7 @@ needed_values = [
 
 def data_to_entry(box , value ):
     # if failure have it be red
-    bad_values = ["!ERROR!" , "AC REMOVED" , "PSU REMOVED"]
+    bad_values = ["!ERROR!" , "!PSU REMOVED!" , "!AC REMOVED!"]
     if value in bad_values:
         box.insert(0, f"{value}")
         box.config(fg="red")
