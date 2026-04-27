@@ -31,11 +31,18 @@ needed_values = [
 
 ## check if IPMI exists
 
-def check_ipmi():
-    c = wmi.WMI(namespace="root\\wmi")
-    if "Microsoft_IPMI" in [cls.info.name for cls in c.classes]:
-        return True
-    return False
+def check_for_ipmi():
+    try:
+        c = wmi.WMI(namespace="root\\wmi")
+        ipmi_class = getattr(c, "Microsoft_IPMI", None)
+        
+        if ipmi_class:
+            instances = ipmi_class()
+            if instances:
+                return instances[0] # Returns the actual connection object
+        return None
+    except Exception:
+        return None
 
 ## configure returned texts
 
@@ -95,8 +102,6 @@ def configure_window( root ):
     return entry_boxes
 
 def app_main():
-    ## run sensor first
-    sensors = IPMI_sensors()
     ## Create the main windows
     appID = 'appliedmaterials.PSUreader.GUI.1'
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appID)
@@ -108,6 +113,8 @@ def app_main():
     ## Create the text boxes and recieve them back
     value_boxes = configure_window(root)
     def update_data():
+        # run sensors
+        sensors = IPMI_sensors()
         # delete the data in the box first
         for box in value_boxes:
             box.delete(0, tk.END)
@@ -124,10 +131,7 @@ def app_main():
         sensors.refresh()
         root.after( 1000 , update_data )
 
-    if check_ipmi():
+    ipmi_conn = check_for_ipmi()
+    if ipmi_conn:
         update_data()
-    else:
-        for box in value_boxes:
-            box.insert(0, f"NO IPMI")
-            box.config(fg="red")
     root.mainloop()
