@@ -30,7 +30,14 @@ needed_values = [
 
 ## configure entry boxes
 
-def data_to_entry(box , value ):
+def configure_text( string  , char ):
+    if string != "!ERROR!":
+        ## add the V in volts on degree sign
+        return string + char # 12.03V for instance
+    else:
+        return string # !ERROR!
+
+def data_to_entry( box , value ):
     # if failure have it be red
     bad_values = ["!ERROR!" , "!PSU REMOVED!" , "!AC REMOVED!"]
     if value in bad_values:
@@ -96,13 +103,13 @@ def app_main():
             box.delete(0, tk.END)
 
         ## update boxes with correct data
-        data_to_entry( value_boxes[0]  , f"{sensors.vol5v}V")
-        data_to_entry( value_boxes[1]  , f"{sensors.vol3v3}V")
-        data_to_entry( value_boxes[2]  , f"{sensors.vol12v}V")
-        data_to_entry( value_boxes[3]  , f"{sensors.temp}\u00b0C")
+        ## For the volts and degree we want to add the symbol if there is no errors
+        data_to_entry( value_boxes[0]  , configure_text( sensors.vol5v , "V") )
+        data_to_entry( value_boxes[1]  , configure_text( sensors.vol3v3 , "V") )
+        data_to_entry( value_boxes[2]  , configure_text( sensors.vol12v , "V") )
+        data_to_entry( value_boxes[3]  , configure_text( sensors.temp , r'\u00b0C') )
         data_to_entry( value_boxes[4]  , f"{sensors.psu1}")
         data_to_entry( value_boxes[5]  , f"{sensors.psu2}")
-
         ## refresh the window and the sensors
         sensors.refresh()
         root.after( 1000 , update_data )
