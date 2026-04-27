@@ -61,32 +61,12 @@ class IPMI_sensors():
         if not IPMI_result: self.temp = "!ERROR!"
         else: self.temp = IPMI_result[1]
         # PSU1
-        backplaneSensor = run_IPMI(0x80)
-        wattageSensor = run_IPMI(0x74)
-        if not backplaneSensor or not wattageSensor: self.psu1 = "!ERROR!"
-        else:
-            # we need to see if the power supply is connected to the back plane
-            # and see if it has wattage-> No wattage means it is not plugged in
-            if backplaneSensor[2] == 192 and wattageSensor[1] > 0:
-                self.psu1 = "OK"
-            elif backplaneSensor[2] != 192:
-                self.psu1 = "PSU REMOVED"
-            else:
-                self.psu1 = "AC REMOVED"
-
+        IPMI_result = run_IPMI(0x7a)
+        if not IPMI_result: self.psu1 = "!ERROR!"
+        else: self.psu1 = IPMI_result
         # PSU2
-        backplaneSensor = run_IPMI(0x81)
-        wattageSensor = run_IPMI(0x75)
-        if not backplaneSensor or not wattageSensor: self.psu2 = "!ERROR!"
-        else:
-            # we need to see if the power supply is connected to the back plane
-            # and see if it has wattage-> No wattage means it is not plugged in
-            if backplaneSensor[2] == 192 and wattageSensor[1] > 0:
-                self.psu2 = "OK" 
-            elif backplaneSensor[2] != 192:
-                self.psu2 = "PSU REMOVED"
-            else:
-                self.psu2 = "AC REMOVED"
-                
+        IPMI_result = run_IPMI(0x7b)
+        if not IPMI_result: self.psu1 = "!ERROR!"
+        else: self.psu1 = IPMI_result
 
         
