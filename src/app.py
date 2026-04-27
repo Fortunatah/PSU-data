@@ -33,7 +33,7 @@ needed_values = [
 def configure_text( string  , char ):
     if string != "!ERROR!":
         ## add the V in volts on degree sign
-        return string + char # 12.03V for instance
+        return str(string) + char # 12.03V for instance
     else:
         return string # !ERROR!
 
