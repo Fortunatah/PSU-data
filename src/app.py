@@ -16,7 +16,17 @@
 import tkinter as tk
 import ctypes
 import wmi
-from .get_sensor_data import IPMI_sensors
+import os
+import sys
+
+## resource path
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 ## variables
 
@@ -107,8 +117,8 @@ def app_main():
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appID)
     root = tk.Tk()
     root.title("AMAT PSU reader")
-    root.iconbitmap("pictures\\applied_materials.ico")
-    root.geometry("180x180")
+    icon_path = resource_path("pictures\\applied_materials.ico")
+    root.geometry("200x180")
     root.configure(bg='white')
     ## Create the text boxes and recieve them back
     value_boxes = configure_window(root)
@@ -131,7 +141,16 @@ def app_main():
         sensors.refresh()
         root.after( 1000 , update_data )
 
+
+    ## if we can connect to IPMI we are good
+    ## if not put that in the entry boxes
     ipmi_conn = check_for_ipmi()
     if ipmi_conn:
+        from .get_sensor_data import IPMI_sensors
         update_data()
+    else:
+        for box in value_boxes:
+            box.insert(0, "!NO IPMI!")
+            box.config(fg="red")
+    
     root.mainloop()
